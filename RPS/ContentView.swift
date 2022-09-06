@@ -16,7 +16,7 @@ struct RPSIcon: View {
         Image(rps[number])
             .renderingMode(.original)
             .clipShape(RoundedRectangle(cornerRadius: 10))
-            .shadow(radius: 5)
+            .shadow(radius: 10)
     }
 }
 
