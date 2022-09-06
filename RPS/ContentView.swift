@@ -59,69 +59,18 @@ struct ContentView: View {
         .alert(textLast, isPresented: $lastAttempt) {
             Button("Reset", role: .destructive, action: reset)
         } message: {
-            Text("This was your last round. \n Your score is \(scoreAfter)!")
+            Text("This was your last round. \n Your score was \(scoreAfter)!")
         }
     }
     
     func RPSTapped (_ number: Int) {
         
         if attempt < 10 {
-            if winOrLose {
-                if RPSArray[appChoosen] == "Rock" {
-                    if RPSArray[number] == "Paper" {
-                        scoreNow += 1
-                        scoreTitle = "Correct!"
-                    } else {
-                        scoreTitle = "Wrong!"
-                        scoreNow -= 1
-                    }
-                } else if RPSArray[appChoosen] == "Scissor" {
-                    if RPSArray[number] == "Rock" {
-                        scoreTitle = "Correct!"
-                        scoreNow += 1
-                    } else {
-                        scoreTitle = "Wrong!"
-                        scoreNow -= 1
-                    }
-                } else if RPSArray[appChoosen] == "Paper" {
-                    if RPSArray[number] == "Scissor" {
-                        scoreTitle = "Correct!"
-                        scoreNow += 1
-                    } else {
-                        scoreTitle = "Wrong!"
-                        scoreNow -= 1
-                    }
-                }
-            } else {
-                if RPSArray[appChoosen] == "Rock" {
-                    if RPSArray[number] == "Scissor" {
-                        scoreTitle = "Correct!"
-                        scoreNow += 1
-                    } else {
-                        scoreTitle = "Wrong!"
-                        scoreNow -= 1
-                    }
-                } else if RPSArray[appChoosen] == "Scissor" {
-                    if RPSArray[number] == "Paper" {
-                        scoreTitle = "Correct!"
-                        scoreNow += 1
-                    } else {
-                        scoreTitle = "Wrong!"
-                        scoreNow -= 1
-                    }
-                } else if RPSArray[appChoosen] == "Paper" {
-                    if RPSArray[number] == "Rock" {
-                        scoreTitle = "Correct!"
-                        scoreNow += 1
-                    } else {
-                        scoreTitle = "Wrong!"
-                        scoreNow -= 1
-                    }
-                }
-            }
+            checkGame(number)
             attempt += 1
             showingScore = true
         } else {
+            checkGame(number)
             reset()
         }
     }
@@ -137,6 +86,62 @@ struct ContentView: View {
         scoreNow = 0
         attempt = 1
         lastAttempt = true
+    }
+    
+    func checkGame(_ number: Int) {
+        if winOrLose {
+            if RPSArray[appChoosen] == "Rock" {
+                if RPSArray[number] == "Paper" {
+                    scoreNow += 1
+                    scoreTitle = "Correct!"
+                } else {
+                    scoreTitle = "Wrong!"
+                    scoreNow -= 1
+                }
+            } else if RPSArray[appChoosen] == "Scissor" {
+                if RPSArray[number] == "Rock" {
+                    scoreTitle = "Correct!"
+                    scoreNow += 1
+                } else {
+                    scoreTitle = "Wrong!"
+                    scoreNow -= 1
+                }
+            } else if RPSArray[appChoosen] == "Paper" {
+                if RPSArray[number] == "Scissor" {
+                    scoreTitle = "Correct!"
+                    scoreNow += 1
+                } else {
+                    scoreTitle = "Wrong!"
+                    scoreNow -= 1
+                }
+            }
+        } else {
+            if RPSArray[appChoosen] == "Rock" {
+                if RPSArray[number] == "Scissor" {
+                    scoreTitle = "Correct!"
+                    scoreNow += 1
+                } else {
+                    scoreTitle = "Wrong!"
+                    scoreNow -= 1
+                }
+            } else if RPSArray[appChoosen] == "Scissor" {
+                if RPSArray[number] == "Paper" {
+                    scoreTitle = "Correct!"
+                    scoreNow += 1
+                } else {
+                    scoreTitle = "Wrong!"
+                    scoreNow -= 1
+                }
+            } else if RPSArray[appChoosen] == "Paper" {
+                if RPSArray[number] == "Rock" {
+                    scoreTitle = "Correct!"
+                    scoreNow += 1
+                } else {
+                    scoreTitle = "Wrong!"
+                    scoreNow -= 1
+                }
+            }
+        }
     }
 }
 
