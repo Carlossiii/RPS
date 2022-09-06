@@ -17,6 +17,7 @@ struct RPSIcon: View {
             .renderingMode(.original)
             .clipShape(RoundedRectangle(cornerRadius: 10))
             .shadow(radius: 10)
+            .fixedSize(horizontal: true, vertical: true)
     }
 }
 
@@ -35,31 +36,65 @@ struct ContentView: View {
     
     
     var body: some View {
-        VStack{
-            VStack (spacing: 10){
-                Text ("Your score is: \(scoreNow)")
-                Text ("App move is: \(RPSArray[appChoosen])")
-                Text ("You should now: \(winOrLose == true ? "Win" : "Lose")")
-                Text ("Attempt: \(attempt)")
-            }
+        ZStack {
+            RadialGradient (stops: [
+                    .init(color: Color(red: 0.7, green: 0.2, blue: 0.1), location: 0.3),
+                    .init(color: Color(red: 0.15, green: 0.15, blue: 0.2), location: 0.3)
+            ], center: .top, startRadius: 150, endRadius: 500)
+                        .ignoresSafeArea()
             
-            ForEach(0..<3) { number in
-                Button {
-                    RPSTapped(number)
-                } label: {
-                    RPSIcon(rps: RPSArray, number: number)
+            VStack (spacing: 10) {
+                Spacer()
+                
+                Text("Rock, paper and scissors!")
+                    .font(.title.bold())
+                    .foregroundColor(.white)
+                
+                HStack (spacing: 150) {
+                    Text (" Score: \(scoreNow) ")
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    Text (" Attempt: \(attempt) ")
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
+                .font(.title3.bold())
+                .foregroundColor(.white)
+                
+                VStack {
+                    HStack (spacing: 15){
+                        Text ("Move: \(RPSArray[appChoosen])")
+                        Text ("|")
+                        Text ("Should: \(winOrLose == true ? "Win" : "Lose")")
+                    }
+                    .font(.title2.bold())
+                    .foregroundColor(.white)
+                    
+                    ForEach(0..<3) { number in
+                        Button {
+                            RPSTapped(number)
+                        } label: {
+                            RPSIcon(rps: RPSArray, number: number)
+                        }
+                    }
+                }
+                
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+            .padding()
             }
-        }
         .alert(scoreTitle, isPresented: $showingScore) {
             Button("Continue", action:  askQuestion)
         } message: {
-            Text("Your score is \(scoreNow).")
+            Text("Your current score is \(scoreNow).")
         }
         .alert(textLast, isPresented: $lastAttempt) {
             Button("Reset", role: .destructive, action: reset)
         } message: {
-            Text("This was your last round. \n Your score was \(scoreAfter)!")
+            Text("You scored \(scoreAfter) points!")
         }
     }
     
