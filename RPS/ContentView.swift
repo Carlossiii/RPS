@@ -104,6 +104,7 @@ struct ContentView: View {
             checkGame(number)
             attempt += 1
             showingScore = true
+            lastAttempt = false
         } else {
             checkGame(number)
             reset()
